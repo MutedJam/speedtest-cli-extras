@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+IFTTT_WEBHOOK_KEY="" # Add the key from https://ifttt.com/maker_webhooks/settings here
+readarray -t SPEEDTEST_RESULT <<< "$(./speedtest-csv --sep '\n')"
+
+json="{\"value1\":\"${SPEEDTEST_RESULT[0]} ||| ${SPEEDTEST_RESULT[1]} ||| ${SPEEDTEST_RESULT[2]} ||| ${SPEEDTEST_RESULT[3]} ||| ${SPEEDTEST_RESULT[4]} ||| ${SPEEDTEST_RESULT[5]} ||| ${SPEEDTEST_RESULT[6]} ||| ${SPEEDTEST_RESULT[7]} ||| ${SPEEDTEST_RESULT[8]} ||| ${SPEEDTEST_RESULT[9]}\"}"
+curl -X POST -H "Content-Type: application/json" -d "${json}" https://maker.ifttt.com/trigger/speedtest/with/key/${IFTTT_WEBHOOK_KEY}
+echo
